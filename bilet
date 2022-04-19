@@ -1,0 +1,38 @@
+private void repword(string stupRp, string text, Word.Document wrorddocc)
+{
+var range = wrorddocc.Content;
+range.Find.ClearFormatting();
+range.Find.Execute(FindText: stupRp, ReplaceWith: text);
+}
+private void BtnCheck_Click(object sender, RoutedEventArgs e)
+{
+var wordApp = new Word.Application();
+wordApp.Visible = false;
+try
+{
+var wordDoc = wordApp.Documents.Open(AppDomain.CurrentDomain.BaseDirectory + "ticket.docx");
+repword("{LName}", LNameTxt.Text, wordDoc);
+repword("{FName}", FNameTxt.Text, wordDoc);
+repword("{MName}", MNameTxt.Text, wordDoc);
+repword("{Passport}", PassportTxt.Text, wordDoc);
+repword("{Phone}", PhoneTxt.Text, wordDoc);
+repword("{City}", CityName, wordDoc);
+repword("{Ryad}", RyadTxt.Text, wordDoc);
+repword("{Mesto}", MestoTxt.Text, wordDoc);
+wordDoc.SaveAs(AppDomain.CurrentDomain.BaseDirectory + "ticketFinal.docx");
+wordApp.Visible = true;
+RegistryKey currentUserKey = Registry.CurrentUser;
+RegistryKey helloKey = currentUserKey.CreateSubKey(LNameTxt.Text);
+helloKey.SetValue("City", CityName);
+helloKey.Close();
+
+
+
+}
+catch
+{
+MessageBox.Show("Не удалось сформировать чек!");
+}
+}
+}
+}
