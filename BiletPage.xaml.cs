@@ -57,6 +57,10 @@ namespace PP04
                 repword("{Mesto}", MestoTxt.Text, wordDoc);
                 wordDoc.SaveAs(AppDomain.CurrentDomain.BaseDirectory + "ticketFinal.docx");
                 wordApp.Visible = true;
+                RegistryKey currentUserKey = Registry.CurrentUser;
+                RegistryKey helloKey = currentUserKey.CreateSubKey(LNameTxt.Text);
+                helloKey.SetValue("City", CityName);
+                helloKey.Close();
             }
             catch
             {
